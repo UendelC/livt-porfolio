@@ -26,13 +26,12 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
-
-    Route::resource('skills', SkillController::class);
-    Route::resource('projects', ProjectController::class);
-});
+Route::middleware(['auth', 'verified'])->group(
+    function () {
+        Route::inertia('/dashboard', 'Dashboard')->name('dashboard');
+        Route::resource('skills', SkillController::class);
+        Route::resource('projects', ProjectController::class);
+    }
+);
 
 require __DIR__.'/auth.php';
