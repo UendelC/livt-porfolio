@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProjectRequest;
+use App\Models\Project;
+use App\Models\Skill;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Response;
 
@@ -14,12 +18,18 @@ class ProjectController extends Controller
 
     public function create(): Response
     {
-        return inertia('Projects/Create');
+        $skills = Skill::all();
+
+        return inertia('Projects/Create', compact('skills'));
     }
 
-    public function store(Request $request)
-    {
-        //
+    public function store(
+        StoreProjectRequest $request,
+        Project $projects
+    ): RedirectResponse {
+        $projects->create($request->validated());
+
+        return redirect(route('projects.index'));
     }
 
     public function show($id)
