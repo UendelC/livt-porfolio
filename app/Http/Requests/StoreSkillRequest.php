@@ -14,12 +14,11 @@ class StoreSkillRequest extends FormRequest
         ];
     }
 
-    public function passedValidation(): void
+    public function transformed(): array
     {
-        $this->merge(
-            [
-                'image' => $this->file('image')->store('skills'),
-            ]
+        return array_merge(
+            parent::validated(),
+            ['image' => $this->file('image')->store('skills')]
         );
     }
 }

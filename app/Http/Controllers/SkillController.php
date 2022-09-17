@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSkillRequest;
+use App\Http\Resources\SkillResource;
 use App\Models\Skill;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -12,7 +13,9 @@ class SkillController extends Controller
 {
     public function index(): Response
     {
-        return inertia('Skills/Index');
+        $skills = SkillResource::collection(Skill::all());
+
+        return inertia('Skills/Index', compact('skills'));
     }
 
     public function create(): Response
@@ -24,7 +27,7 @@ class SkillController extends Controller
         StoreSkillRequest $request,
         Skill $skills
     ): RedirectResponse {
-        $skills->create($request->validated());
+        $skills->create($request->transformed());
 
         return redirect(route('skills.index'));
     }
