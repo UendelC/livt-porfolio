@@ -13,4 +13,13 @@ class StoreSkillRequest extends FormRequest
             'name' => ['required', 'min:3'],
         ];
     }
+
+    public function passedValidation(): void
+    {
+        $this->merge(
+            [
+                'image' => $this->file('image')->store('skills'),
+            ]
+        );
+    }
 }

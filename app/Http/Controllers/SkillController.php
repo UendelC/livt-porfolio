@@ -6,7 +6,6 @@ use App\Http\Requests\StoreSkillRequest;
 use App\Models\Skill;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Inertia\Response;
 
 class SkillController extends Controller
@@ -25,15 +24,9 @@ class SkillController extends Controller
         StoreSkillRequest $request,
         Skill $skills
     ): RedirectResponse {
-        $image_path = $request->file('image')->store('skills');
-        $skills->create(
-            [
-                'name' => $request->name,
-                'image' => $image_path,
-            ]
-        );
+        $skills->create($request->validated());
 
-        return Redirect::route('skills.index');
+        return redirect(route('skills.index'));
     }
 
     public function show($id)
