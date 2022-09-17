@@ -27,7 +27,7 @@ class ProjectController extends Controller
         StoreProjectRequest $request,
         Project $projects
     ): RedirectResponse {
-        $projects->create($request->validated());
+        $projects->create($request->transformed());
 
         return redirect(route('projects.index'));
     }

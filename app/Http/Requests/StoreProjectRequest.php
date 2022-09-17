@@ -17,12 +17,11 @@ class StoreProjectRequest extends FormRequest
         ];
     }
 
-    public function passedValidation(): void
+    public function transformed(): array
     {
-        $this->merge(
-            [
-                'image' => $this->file('image')->store('projects'),
-            ]
+        return array_merge(
+            parent::validated(),
+            ['image' => $this->file('image')->store('projects')]
         );
     }
 }
