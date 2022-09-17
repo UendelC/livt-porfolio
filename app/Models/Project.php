@@ -10,7 +10,7 @@ class Project extends Model
 {
     use HasFactory;
 
-    protected array $fillable = [
+    protected $fillable = [
         'skill_id',
         'name',
         'image',
